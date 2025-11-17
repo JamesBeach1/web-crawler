@@ -11,21 +11,21 @@ public class DemoLocalVisitedCache implements VisitedCache {
 
     private static final Logger log = LoggerFactory.getLogger(DemoLocalVisitedCache.class);
 
-    private final ConcurrentHashMap<String, Boolean> visited = new ConcurrentHashMap<>();
+    private final Set<String> visited = ConcurrentHashMap.newKeySet();
 
     @Override
     public boolean isVisited(String url) {
-        return visited.containsKey(url);
+        return visited.contains(url);
     }
 
     @Override
     public void markVisited(String url) {
-        log.info("Marking URL as visited: {}", url);
-        visited.put(url, true);
+        log.debug("Marking URL as visited: {}", url);
+        visited.add(url);
     }
 
     public Set<String> getVisitedUrls() {
-        return visited.keySet();
+        return visited;
     }
 
 }

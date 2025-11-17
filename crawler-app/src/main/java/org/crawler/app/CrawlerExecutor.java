@@ -3,7 +3,7 @@ package org.crawler.app;
 
 import jakarta.annotation.PreDestroy;
 import org.crawler.engine.queue.DemoLocalVisitedCache;
-import org.crawler.engine.queue.WebCrawler;
+import org.crawler.engine.WebCrawler;
 import org.crawler.model.VisitedCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

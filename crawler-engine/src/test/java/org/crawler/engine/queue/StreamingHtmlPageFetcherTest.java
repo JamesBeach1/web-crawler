@@ -1,6 +1,7 @@
 package org.crawler.engine.queue;
 
 
+import org.crawler.engine.StreamingHtmlPageFetcher;
 import org.crawler.model.CrawlResult;
 import org.junit.jupiter.api.Test;
 

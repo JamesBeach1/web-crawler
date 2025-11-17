@@ -1,5 +1,6 @@
-package org.crawler.engine.queue;
+package org.crawler.engine;
 
+import org.crawler.engine.queue.DemoLocalVisitedCache;
 import org.crawler.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

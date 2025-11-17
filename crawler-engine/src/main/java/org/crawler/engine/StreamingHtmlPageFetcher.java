@@ -1,4 +1,4 @@
-package org.crawler.engine.queue;
+package org.crawler.engine;
 
 import org.crawler.model.CrawlResult;
 import org.crawler.model.PageFetcher;

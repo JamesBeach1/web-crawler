@@ -2,8 +2,8 @@ package org.crawler.app.config;
 
 import org.crawler.engine.queue.DemoLocalQueue;
 import org.crawler.engine.queue.DemoLocalVisitedCache;
-import org.crawler.engine.queue.StreamingHtmlPageFetcher;
-import org.crawler.engine.queue.WebCrawler;
+import org.crawler.engine.StreamingHtmlPageFetcher;
+import org.crawler.engine.WebCrawler;
 import org.crawler.model.CrawlUrl;
 import org.crawler.model.PageFetcher;
 import org.crawler.model.UrlQueue;
