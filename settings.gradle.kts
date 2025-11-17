@@ -11,4 +11,4 @@ plugins {
 }
 
 rootProject.name = "web-crawler"
-include("app", "list", "utilities")
+include("crawler-app", "crawler-engine", "crawler-model")
