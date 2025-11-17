@@ -9,7 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class CrawlerApplication {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         SpringApplication.run(CrawlerApplication.class, args);
+        Thread.currentThread().join();
     }
 }

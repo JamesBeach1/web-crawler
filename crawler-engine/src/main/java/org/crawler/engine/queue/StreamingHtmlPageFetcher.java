@@ -8,10 +8,11 @@ import org.jsoup.nodes.Element;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class StreamingHtmlPageFetcher implements PageFetcher {
 
@@ -19,7 +20,7 @@ public class StreamingHtmlPageFetcher implements PageFetcher {
 
     @Override
     public CrawlResult fetch(String urlString) throws Exception {
-        HttpURLConnection conn = (HttpURLConnection) new URL(urlString).openConnection();
+        HttpURLConnection conn = (HttpURLConnection) new URI(urlString).toURL().openConnection();
         conn.setRequestMethod("GET");
         conn.setConnectTimeout(TIMEOUT_MS);
         conn.setReadTimeout(TIMEOUT_MS);

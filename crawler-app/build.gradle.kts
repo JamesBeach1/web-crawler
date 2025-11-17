@@ -14,7 +14,11 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":crawler-engine"))
+    implementation(project(":crawler-model"))
+
     implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-starter-logging")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
