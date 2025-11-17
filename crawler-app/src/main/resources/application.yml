@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: crawler-app
+  profiles:
+    active: local
+logging:
+  level:
+    root: INFO

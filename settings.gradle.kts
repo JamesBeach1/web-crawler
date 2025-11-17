@@ -10,5 +10,8 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-rootProject.name = "web-crawler"
-include("crawler-app", "crawler-engine", "crawler-model")
+rootProject.name = "crawler"
+
+include("crawler-model")
+include("crawler-engine")
+include("crawler-app")
