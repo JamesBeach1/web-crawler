@@ -47,23 +47,21 @@ public class WebCrawler {
         if (!running.compareAndSet(false, true)) return;
 
         log.info("Starting WebCrawler...");
-        executor.submit(() -> {
-            while (running.get()) {
-                try {
-                    Optional<CrawlUrl> maybeUrl = urlQueue.poll();
-                    if (maybeUrl.isEmpty()) continue;
+        while (running.get()) {
+            try {
+                Optional<CrawlUrl> maybeUrl = urlQueue.poll();
+                if (maybeUrl.isEmpty()) continue;
 
-                    CrawlUrl crawlUrl = maybeUrl.get();
+                CrawlUrl crawlUrl = maybeUrl.get();
 
-                    if (visitedCache.isVisited(crawlUrl.url())) continue;
+                if (visitedCache.isVisited(crawlUrl.url())) continue;
 
-                    executor.submit(() -> crawlUrlTask(crawlUrl));
+                executor.submit(() -> crawlUrlTask(crawlUrl));
 
-                } catch (Exception e) {
-                    log.error("Error in main crawler loop", e);
-                }
+            } catch (Exception e) {
+                log.error("Error in main crawler loop", e);
             }
-        });
+        }
     }
 
     private void crawlUrlTask(CrawlUrl crawlUrl) {

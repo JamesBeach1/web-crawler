@@ -27,7 +27,9 @@ public class CrawlerExecutor {
     private void startCrawler() {
         if (started.compareAndSet(false, true)) {
             log.info("Starting WebCrawler...");
-            crawler.start();
+            Thread.ofPlatform()
+                .name("crawler-starter")
+                .start(crawler::start);
         }
     }
 
