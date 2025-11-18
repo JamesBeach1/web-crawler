@@ -10,7 +10,7 @@ crawler:
   health:
     report:
       interval:
-        millis: ${CRAWLER_HEALTH_REPORT_INTERVAL_MILLIS:17000}
+        millis: ${CRAWLER_HEALTH_REPORT_INTERVAL_MILLIS:15000}
   restrict:
     to:
       subdomain: ${CRAWLER_RESTRICT_TO_SUBDOMAIN:true}

@@ -14,7 +14,6 @@ repositories {
 dependencies {
     implementation(project(":crawler-model"))
 
-    implementation("org.ccil.cowan.tagsoup:tagsoup:1.2.1")
     implementation("org.jsoup:jsoup:1.21.2")
     implementation("org.slf4j:slf4j-api:2.0.1")
     implementation("ch.qos.logback:logback-classic:1.5.21")

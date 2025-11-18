@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
-import java.time.Instant;
 import java.util.Optional;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -78,7 +77,7 @@ public class WebCrawler {
 
             CrawlResult result = pageFetcher.fetch(url);
             log.info("Crawled URL: {} -> discovered {} links at {} [{}]",
-                    url, result.discoveredUrls().size(), Instant.now(), Thread.currentThread().getName());
+                    url, result.discoveredUrls().size(), System.currentTimeMillis(), Thread.currentThread().getName());
 
             for (String href : result.discoveredUrls()) {
                 if (!visitedCache.isVisited(href)) {

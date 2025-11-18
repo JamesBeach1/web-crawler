@@ -12,7 +12,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -70,7 +69,7 @@ public class StreamingHtmlPageFetcher implements PageFetcher {
                 hrefs.add(link.absUrl("href"));
             }
 
-            return new CrawlResult(urlString, title, description, hrefs, Instant.now());
+            return CrawlResult.create(urlString, title, description, hrefs);
         }
     }
 }
