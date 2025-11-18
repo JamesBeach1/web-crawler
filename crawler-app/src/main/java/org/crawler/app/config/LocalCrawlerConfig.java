@@ -30,6 +30,9 @@ public class LocalCrawlerConfig {
     @Value("${crawler.connect.timeout.millis}")
     private Long CONNECT_TIMEOUT_MS;
 
+    @Value("${crawler.restrict.to.subdomain}")
+    private boolean restrictToSubDomain;
+
     @Bean
     public UrlQueue urlQueue() {
         CrawlUrl seed = new CrawlUrl("https://crawlme.monzo.com/", 0, Instant.now());

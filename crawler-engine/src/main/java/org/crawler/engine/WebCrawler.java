@@ -29,7 +29,7 @@ public class WebCrawler {
             UrlQueue urlQueue,
             VisitedCache visitedCache,
             boolean restrictToSameSubdomain,
-            int maxConcurrentFetches // -1 for unlimited
+            int maxConcurrentFetches
     ) {
         this.pageFetcher = pageFetcher;
         this.urlQueue = urlQueue;

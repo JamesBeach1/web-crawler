@@ -7,3 +7,10 @@ crawler:
   connect:
     timeout:
       millis: ${CRAWLER_CONNECT_TIMEOUT_MILLIS:5000}
+  health:
+    report:
+      interval:
+        millis: ${CRAWLER_HEALTH_REPORT_INTERVAL_MILLIS:17000}
+  restrict:
+    to:
+      subdomain: ${CRAWLER_RESTRICT_TO_SUBDOMAIN:true}
