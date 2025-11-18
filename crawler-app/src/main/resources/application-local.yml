@@ -1,0 +1,9 @@
+crawler:
+  concurrency:
+    limit: ${CRAWLER_CONCURRENCY_LIMIT:512}
+  client:
+    pool:
+      size: ${CRAWLER_CLIENT_POOL_SIZE:10}
+  connect:
+    timeout:
+      millis: ${CRAWLER_CONNECT_TIMEOUT_MILLIS:5000}

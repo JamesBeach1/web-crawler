@@ -8,6 +8,7 @@ import org.crawler.model.CrawlUrl;
 import org.crawler.model.PageFetcher;
 import org.crawler.model.UrlQueue;
 import org.crawler.model.VisitedCache;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -20,7 +21,14 @@ import java.util.Set;
 @Profile("local")
 public class LocalCrawlerConfig {
 
-    private final static int CONCURRENCY_LIMIT = 50;
+    @Value("${crawler.concurrency.limit}")
+    private int CONCURRENCY_LIMIT;
+
+    @Value("${crawler.client.pool.size}")
+    private int CLIENT_POOL_SIZE;
+
+    @Value("${crawler.connect.timeout.millis}")
+    private Long CONNECT_TIMEOUT_MS;
 
     @Bean
     public UrlQueue urlQueue() {
@@ -40,6 +48,6 @@ public class LocalCrawlerConfig {
 
     @Bean
     public PageFetcher pageFetcher() {
-        return new StreamingHtmlPageFetcher();
+        return new StreamingHtmlPageFetcher(CLIENT_POOL_SIZE, CONNECT_TIMEOUT_MS);
     }
 }

@@ -1,49 +1,56 @@
 package org.crawler.app;
 
-
-import jakarta.annotation.PreDestroy;
 import org.crawler.engine.queue.DemoLocalVisitedCache;
 import org.crawler.engine.WebCrawler;
 import org.crawler.model.VisitedCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.SmartLifecycle;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Set;
 
 @Component
-public class CrawlerExecutor {
+public class CrawlerExecutor implements SmartLifecycle {
 
     private static final Logger log = LoggerFactory.getLogger(CrawlerExecutor.class);
 
     private final WebCrawler crawler;
-    private final AtomicBoolean started = new AtomicBoolean(false);
+    private boolean running = false;
 
     public CrawlerExecutor(WebCrawler crawler) {
         this.crawler = crawler;
-        startCrawler();
     }
 
-    private void startCrawler() {
-        if (started.compareAndSet(false, true)) {
-            log.info("Starting WebCrawler...");
-            Thread.ofPlatform()
-                .name("crawler-starter")
-                .start(crawler::start);
-        }
+    @Override
+    public void start() {
+        running = true;
+        Thread.ofPlatform().name("crawler-lifecycle").start(crawler::start);
     }
 
-    @PreDestroy
-    public void shutdownCrawler() {
-        log.info("Stopping WebCrawler...");
+    @Override
+    public void stop() {
         crawler.stop();
+        printReport();
+        running = false;
+    }
 
+    @Override
+    public boolean isRunning() {
+        return running;
+    }
+
+    @Override
+    public int getPhase() {
+        return Integer.MAX_VALUE;
+    }
+
+    private void printReport() {
         VisitedCache cache = crawler.getVisitedCache();
-        if (cache instanceof DemoLocalVisitedCache) {
-            log.info("Crawler shutdown report:");
-            log.info("Visited URLs: {}", ((DemoLocalVisitedCache) cache).getVisitedUrls().size());
-            ((DemoLocalVisitedCache) cache).getVisitedUrls()
-                    .forEach(url -> log.info("{}", url));
+        if (cache instanceof DemoLocalVisitedCache d) {
+            Set<String> urls = d.getVisitedUrls();
+            LoggerFactory.getLogger(getClass()).info("Visited URLs: {}", urls.size());
+            urls.forEach(url -> LoggerFactory.getLogger(getClass()).info("{}", url));
         }
     }
 
