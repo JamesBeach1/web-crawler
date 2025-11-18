@@ -7,29 +7,25 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.Optional;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WebCrawler {
 
     private static final Logger log = LoggerFactory.getLogger(WebCrawler.class);
-
+    final AtomicBoolean running = new AtomicBoolean(false);
     private final PageFetcher pageFetcher;
     private final UrlQueue urlQueue;
     private final VisitedCache visitedCache;
     private final ExecutorService executor;
-    private final AtomicBoolean running = new AtomicBoolean(false);
     private final boolean restrictToSameSubdomain;
 
     private final Semaphore concurrencyLimiter;
 
-    public WebCrawler(
-            PageFetcher pageFetcher,
-            UrlQueue urlQueue,
-            VisitedCache visitedCache,
-            boolean restrictToSameSubdomain,
-            int maxConcurrentFetches
-    ) {
+    public WebCrawler(PageFetcher pageFetcher, UrlQueue urlQueue, VisitedCache visitedCache, boolean restrictToSameSubdomain, int maxConcurrentFetches) {
         this.pageFetcher = pageFetcher;
         this.urlQueue = urlQueue;
         this.visitedCache = visitedCache;
@@ -76,8 +72,7 @@ public class WebCrawler {
             visitedCache.markVisited(url, crawlUrl.depthFromSeed());
 
             CrawlResult result = pageFetcher.fetch(url);
-            log.info("Crawled URL: {} -> discovered {} links at {} [{}]",
-                    url, result.discoveredUrls().size(), System.currentTimeMillis(), Thread.currentThread().getName());
+            log.info("Crawled URL: {} -> discovered {} links at {} [{}]", url, result.discoveredUrls().size(), System.currentTimeMillis(), Thread.currentThread().getName());
 
             for (String href : result.discoveredUrls()) {
                 if (!visitedCache.isVisited(href)) {

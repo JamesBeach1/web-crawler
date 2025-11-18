@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class StreamingHtmlPageFetcher implements PageFetcher {
 
     private final Duration requestTimeout;
-    private final List<HttpClient> clientPool;
+    protected final List<HttpClient> clientPool;
     private final AtomicInteger nextClientIndex = new AtomicInteger(0);
 
     public StreamingHtmlPageFetcher(int clientPoolSize, Long timeout) {
