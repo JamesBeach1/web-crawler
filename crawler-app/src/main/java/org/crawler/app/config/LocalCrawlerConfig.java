@@ -33,15 +33,18 @@ public class LocalCrawlerConfig {
     @Value("${crawler.restrict.to.subdomain}")
     private boolean restrictToSubDomain;
 
+    @Value("${crawler.cache.expiration.millis}")
+    private long cacheExpirationMillis;
+
     @Bean
     public UrlQueue urlQueue() {
-        CrawlUrl seed = new CrawlUrl("https://crawlme.monzo.com/", 0, Instant.now());
+        CrawlUrl seed = CrawlUrl.create("https://crawlme.monzo.com/", 0);
         return new DemoLocalQueue(Set.of(seed));
     }
 
     @Bean
     public VisitedCache visitedCache() {
-        return new DemoLocalVisitedCache();
+        return new DemoLocalVisitedCache(cacheExpirationMillis);
     }
 
     @Bean

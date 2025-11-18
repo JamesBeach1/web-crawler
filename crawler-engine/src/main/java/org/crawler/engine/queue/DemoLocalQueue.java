@@ -34,7 +34,6 @@ public class DemoLocalQueue implements UrlQueue {
 
     @Override
     public void offer(CrawlUrl url) {
-        log.debug("Offering URL to queue: {}", url.url());
         queue.offer(url);
     }
 }

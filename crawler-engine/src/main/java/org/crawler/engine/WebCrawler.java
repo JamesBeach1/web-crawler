@@ -74,7 +74,7 @@ public class WebCrawler {
             String url = crawlUrl.url();
             if (visitedCache.isVisited(url)) return;
 
-            visitedCache.markVisited(url);
+            visitedCache.markVisited(url, crawlUrl.depthFromSeed());
 
             CrawlResult result = pageFetcher.fetch(url);
             log.info("Crawled URL: {} -> discovered {} links at {} [{}]",
@@ -83,7 +83,8 @@ public class WebCrawler {
             for (String href : result.discoveredUrls()) {
                 if (!visitedCache.isVisited(href)) {
                     if (restrictToSameSubdomain && !isSameSubdomain(url, href)) continue;
-                    urlQueue.offer(new CrawlUrl(href, 0, Instant.now()));
+                    int newDepth = crawlUrl.depthFromSeed() + 1;
+                    urlQueue.offer(CrawlUrl.create(href, newDepth));
                 }
             }
 

@@ -14,3 +14,6 @@ crawler:
   restrict:
     to:
       subdomain: ${CRAWLER_RESTRICT_TO_SUBDOMAIN:true}
+  cache:
+    expiration:
+      millis: ${CRAWLER_CACHE_EXPIRATION_MILLIS:3600000}

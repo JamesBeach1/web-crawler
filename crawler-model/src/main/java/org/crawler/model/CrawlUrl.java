@@ -1,6 +1,8 @@
 package org.crawler.model;
 
-import java.time.Instant;
 
-public record CrawlUrl(String url, int depthFromSeed, Instant lastCrawl) {
+public record CrawlUrl(String url, int depthFromSeed, long lastCrawlMillis) {
+    public static CrawlUrl create(String url, int depthFromSeed) {
+        return new CrawlUrl(url, depthFromSeed, System.currentTimeMillis());
+    }
 }

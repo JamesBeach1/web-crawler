@@ -2,6 +2,7 @@ package org.crawler.app;
 
 import org.crawler.engine.queue.DemoLocalVisitedCache;
 import org.crawler.engine.WebCrawler;
+import org.crawler.model.CrawlUrl;
 import org.crawler.model.VisitedCache;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.SmartLifecycle;
@@ -45,7 +46,7 @@ public class CrawlerExecutor implements SmartLifecycle {
     private void printReport() {
         VisitedCache cache = crawler.getVisitedCache();
         if (cache instanceof DemoLocalVisitedCache d) {
-            Set<String> urls = d.getVisitedUrls();
+            Set<CrawlUrl> urls = d.getVisitedUrls();
             LoggerFactory.getLogger(getClass()).info("Visited URLs: {}", urls.size());
             urls.forEach(url -> LoggerFactory.getLogger(getClass()).info("{}", url));
         }
