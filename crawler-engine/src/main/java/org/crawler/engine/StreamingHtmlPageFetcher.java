@@ -44,7 +44,13 @@ public class StreamingHtmlPageFetcher implements PageFetcher {
     @Override
     public CrawlResult fetch(String urlString) throws Exception {
         HttpClient client = getClient();
-        URI uri = URI.create(urlString);
+        URI uri;
+
+        try {
+            uri = URI.create(urlString);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid URL: " + urlString, e);
+        }
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
@@ -52,10 +58,20 @@ public class StreamingHtmlPageFetcher implements PageFetcher {
                 .GET()
                 .build();
 
-        HttpResponse<InputStream> response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
+        HttpResponse<InputStream> response;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
+        } catch (Exception e) {
+            throw new IOException("Failed to fetch URL: " + urlString, e);
+        }
 
         try (InputStream in = response.body()) {
-            Document doc = Jsoup.parse(in, "UTF-8", urlString);
+            Document doc;
+            try {
+                doc = Jsoup.parse(in, "UTF-8", urlString);
+            } catch (Exception e) {
+                throw new IOException("Failed to parse HTML content from: " + urlString, e);
+            }
 
             String title = doc.title();
             String description = "";
@@ -70,6 +86,9 @@ public class StreamingHtmlPageFetcher implements PageFetcher {
             }
 
             return CrawlResult.create(urlString, title, description, hrefs);
+
+        } catch (Exception e) {
+            throw new IOException("Error reading response body for URL: " + urlString, e);
         }
     }
 }
