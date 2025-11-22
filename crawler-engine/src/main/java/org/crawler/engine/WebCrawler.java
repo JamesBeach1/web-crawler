@@ -67,7 +67,6 @@ public class WebCrawler {
             }
 
             String url = crawlUrl.url();
-            if (visitedCache.isVisited(url)) return;
 
             visitedCache.markVisited(url, crawlUrl.depthFromSeed());
 
